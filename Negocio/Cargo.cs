@@ -9,7 +9,6 @@ namespace Negocio
     public class Cargo
     {
         public int Id { get; set; }
-        public string name { get; set; }
         public string company_name { get; set; }
         public string company_id { get; set; }
         public string amount { get; set; }
@@ -18,7 +17,7 @@ namespace Negocio
         public string updated_at { get; set; }
         public List<object> Cargos { get; set; }
 
-        public static Result AddL(Cargo cargo)
+        public static Result Add(Cargo cargo)
         {
            Result result = new Result();
             try
@@ -28,30 +27,32 @@ namespace Negocio
                     Cargo cargo = new Cargo();
 
                     cargo.Id = cargo.Id;
-                    cargo.name = cargo.name;
                     cargo.company_id = cargo.company_id;
                     cargo.amount = cargo.amount;
                     cargo.status = cargo.status;
                     cargo.created_at = cargo.created_at;
+                    cargo.updated_at = cargo.updated_at;
 
-                    cargo.paid_at = cargo.paid_at;
-                    
 
-                    context.Cargas.Add(cargo);
-                    context.SaveChanges();
+                    if (cargo != null)
+                    {
+                        context.Empleados.Add(cargo);
+                        context.SaveChanges();
+                        result.Correct = true;
+                    }
+                    else
+                    {
+                        result.Correct = false;
+                    }
                 }
-                result.Correct = true;
             }
-
             catch (Exception ex)
             {
                 result.Correct = false;
                 result.ErrorMessage = ex.Message;
-                result.Ex = ex;
             }
             return result;
         }
-
 
 
 

@@ -38,7 +38,7 @@ namespace Modelo.Controllers
                 {
                     if (!string.IsNullOrEmpty(row))
                     {
-                        customers.Add(new Cargo
+                        customers.Add(new Negocio.Cargo
                         {
                             Id = Convert.ToInt32(row.Split(",")[0]),
                             name = row.Split(",")[1],
