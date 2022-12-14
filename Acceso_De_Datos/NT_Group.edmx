@@ -1,0 +1,142 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="NT_GroupModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="companies">
+          <Key>
+            <PropertyRef Name="company_id" />
+          </Key>
+          <Property Name="company_id" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="name" Type="varchar" MaxLength="130" Nullable="false" />
+        </EntityType>
+        <EntityType Name="transacciones">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="company_id" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="amount" Type="decimal" Precision="16" Scale="2" Nullable="false" />
+          <Property Name="status" Type="varchar" MaxLength="30" Nullable="false" />
+          <Property Name="created_at" Type="datetime" Nullable="false" />
+          <Property Name="paid_at" Type="datetime" />
+          <Property Name="updated_at" Type="datetime" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__transacci__compa__1367E606">
+          <End Role="companies" Type="Self.companies" Multiplicity="1" />
+          <End Role="transacciones" Type="Self.transacciones" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="companies">
+              <PropertyRef Name="company_id" />
+            </Principal>
+            <Dependent Role="transacciones">
+              <PropertyRef Name="company_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="NT_GroupModelStoreContainer">
+          <EntitySet Name="companies" EntityType="Self.companies" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="transacciones" EntityType="Self.transacciones" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__transacci__compa__1367E606" Association="Self.FK__transacci__compa__1367E606">
+            <End Role="companies" EntitySet="companies" />
+            <End Role="transacciones" EntitySet="transacciones" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="NT_GroupModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="NT_GroupEntities" annotation:LazyLoadingEnabled="true" >
+          <EntitySet Name="companies" EntityType="NT_GroupModel.company" />
+          <EntitySet Name="transacciones" EntityType="NT_GroupModel.transaccione" />
+          <AssociationSet Name="FK__transacci__compa__1367E606" Association="NT_GroupModel.FK__transacci__compa__1367E606">
+            <End Role="company" EntitySet="companies" />
+            <End Role="transaccione" EntitySet="transacciones" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="company">
+          <Key>
+            <PropertyRef Name="company_id" />
+          </Key>
+          <Property Name="company_id" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="name" Type="String" Nullable="false" MaxLength="130" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="transacciones" Relationship="NT_GroupModel.FK__transacci__compa__1367E606" FromRole="company" ToRole="transaccione" />
+        </EntityType>
+        <EntityType Name="transaccione">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="company_id" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="amount" Type="Decimal" Nullable="false" Precision="16" Scale="2" />
+          <Property Name="status" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="false" />
+          <Property Name="created_at" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="paid_at" Type="DateTime" Precision="3" />
+          <Property Name="updated_at" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="company" Relationship="NT_GroupModel.FK__transacci__compa__1367E606" FromRole="transaccione" ToRole="company" />
+        </EntityType>
+        <Association Name="FK__transacci__compa__1367E606">
+          <End Type="NT_GroupModel.company" Role="company" Multiplicity="1" />
+          <End Type="NT_GroupModel.transaccione" Role="transaccione" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="company">
+              <PropertyRef Name="company_id" />
+            </Principal>
+            <Dependent Role="transaccione">
+              <PropertyRef Name="company_id" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="NT_GroupModelStoreContainer" CdmEntityContainer="NT_GroupEntities" >
+          <EntitySetMapping Name="companies">
+            <EntityTypeMapping TypeName="NT_GroupModel.company">
+              <MappingFragment StoreEntitySet="companies">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="company_id" ColumnName="company_id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="transacciones">
+            <EntityTypeMapping TypeName="NT_GroupModel.transaccione">
+              <MappingFragment StoreEntitySet="transacciones">
+                <ScalarProperty Name="updated_at" ColumnName="updated_at" />
+                <ScalarProperty Name="paid_at" ColumnName="paid_at" />
+                <ScalarProperty Name="created_at" ColumnName="created_at" />
+                <ScalarProperty Name="status" ColumnName="status" />
+                <ScalarProperty Name="amount" ColumnName="amount" />
+                <ScalarProperty Name="company_id" ColumnName="company_id" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

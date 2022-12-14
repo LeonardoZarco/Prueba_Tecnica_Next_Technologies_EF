@@ -1,0 +1,40 @@
+﻿@model Modelo.CargoDetalle
+@{
+    ViewBag.Title = "CarAll";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Carga de datos</h2>
+
+@using (Html.BeginForm("CarAll", "Home", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    <input type="file" name="postedFile" />
+    <input type="submit" value="Importar" />
+}
+
+{
+    <hr />
+    <table cellpadding="0" cellspacing="0">
+        <tr>
+            <th>company_name</th>
+            <th>company_id</th>
+            <th>amount</th>
+            <th>status</th>
+            <th>created_at</th>
+            <th>updated_at</th>
+
+        </tr>
+        @foreach (Modelo.CargoDetalle cargo in Model.Cargos)
+        {
+            <tr>
+                <td>@cargo.Id</td>
+                <td>@cargo.company_name</td>
+                <td>@cargo.company_id</td>
+                <td>@cargo.amount</td>
+                <td>@cargo.status</td>
+                <td>@cargo.created_at</td>
+                <td>@cargo.updated_at</td>
+            </tr>
+        }
+    </table>
+}
